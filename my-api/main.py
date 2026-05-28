@@ -19,6 +19,12 @@ def home():
 # Get All Book
 @app.get("/books")
 def get_book():
+    # If done in real life example
+    # connect to db
+    # run a SQL query
+    # get outputs
+    # tidy
+    # formats
     return books
 
 # import json
