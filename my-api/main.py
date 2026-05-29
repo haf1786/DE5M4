@@ -1,9 +1,15 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
+from typing import Optional
 
 # Write JSON line entries inside a list with some example books and their availability.
 
-app = FastAPI()
+app = FastAPI(title="Simple Book API")
+
+class Book(BaseModel):
+    id: int
+    title: str
+    available: bool
 
 # Fake DB
 books = [
@@ -29,19 +35,15 @@ def get_book():
     # formats
     return books
 
-# Get Available Books
+# 1 and 2 Get Available Books
 @app.get("/books/available")
 def get_available_books():
     available_books = [book for book in books if book["available"]]
     return {"available_books": available_books}
 
-class BookResponse(BaseModel):
-    id: int
-    title: str
-    available: bool
 
-# Check if Specific Book is available
-@app.get("/books/{book_id}", response_model=BookResponse)
+# 3 Check if specific book is available
+@app.get("/books/{book_id}", response_model=Book)
 def check_book_availability(book_id: int):
     book = next((b for b in books if b["id"] == book_id), None)
 
@@ -49,3 +51,32 @@ def check_book_availability(book_id: int):
         raise HTTPException(status_code=404, detail="Book not found")
     
     return book
+
+# 4 Update only the title of a book
+@app.patch("/new_books/{book_id}/{title}")
+def update_book(book_id: int, title: str):
+  for book in books:
+    if book["id"] == book_id:
+      book["title"] = title
+      return {"message": "Book updated", "book": book}
+  raise HTTPException(status_code=404, detail="Book not found")
+
+# @app.patch("/books/{book_id}/{title}", response_model=Book)
+# def update_book_title(book_id: int, title: str):
+#     if book_id not in books:
+#         raise HTTPException(status_code=404, detail="Book not found")
+
+#     if title is None:
+#         raise HTTPException(status_code=400, detail="Title field is required for")
+    
+#     books_db[book_id]["title"] = title
+#     return books_db[book_id]
+
+# 5 Remove a book
+@app.delete("/books/delete/{book_id}")
+def delete_book(book_id: int):
+    if book_id not in books:
+        raise HTTPException(status_code=404, detail="Book not found")
+    
+    del books[book_id]
+    return {"available_books": available_books}
