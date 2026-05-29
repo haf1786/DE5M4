@@ -14,4 +14,8 @@
 
 ## In future, I plan to add additional functionality to this API to include the ability to add new books and also more information about the books.
 
-## Final MVP is saved in main.py
+## Final MVP is saved in main.py, which can be run using Microsoft Visual Studio Code.
+
+## To run the code, open main.py and select Run Python File.
+
+## To test functionality, use http://127.0.0.1:8000/docs or http://127.0.0.1:8000 and then navigate to each of the functions.
