@@ -10,6 +10,8 @@
 
 ## Best practise & future scope of work
 
-## I followed a number of best practise steps 
+## I followed a number of best practise steps including documenting my code and I also rewrote code so that it was simpler to understand. I also removed additional code that was no longer required, this included removing unnecessary import steps.
+
+## In future, I plan to add additional functionality to this API to include the ability to add new books and also more information about the books.
 
 ## Final MVP is saved in main.py
