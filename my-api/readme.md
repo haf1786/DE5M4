@@ -18,6 +18,9 @@
 
 ## To run the code, open main.py and select Run Python File.
 
+## In the Python terminal window: enter uvicorn main:app to start the local uvicorn server. Press Ctrl+C to close it. 
+## Then make changes and run uvicorn main:app again to reopen it.
+
 ## To test functionality, use http://127.0.0.1:8000/docs or http://127.0.0.1:8000 and then navigate to each of the functions.
 
 ## Steps completed:
