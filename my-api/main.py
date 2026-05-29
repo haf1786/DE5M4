@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 # Write JSON line entries inside a list with some example books and their availability.
 
@@ -8,7 +9,8 @@ app = FastAPI()
 books = [
     {"id":1, "title":"Harry Potter", "available":True},
     {"id":2, "title":"Eragon", "available":False},
-    {"id":3, "title":"The Hobbit", "available":True}                          
+    {"id":3, "title":"The Hobbit", "available":True},
+    {"id":4, "title":"The Hobbit 2", "available":True}                          
 ]
 
 # Home Route
@@ -27,15 +29,23 @@ def get_book():
     # formats
     return books
 
-# import json
+# Get Available Books
+@app.get("/books/available")
+def get_available_books():
+    available_books = [book for book in books if book["available"]]
+    return {"available_books": available_books}
 
-# books = [
-#     {"title": "Avengers", "availability": "1 available" },
-#     {"title": "Superman", "availability": "4 available" },
-#     {"title": "Spiderman", "availability": "2 available" }
-# ]
+class BookResponse(BaseModel):
+    id: int
+    title: str
+    available: bool
 
-# with open("books.json1", "w", encoding="utf-8") as file:
-#     for book in books:
-#         json_line = json.dumps(book, ensure_ascii=False)
-#         file.write(json_line + "\n")
+# Check if Specific Book is available
+@app.get("/books/{book_id}", response_model=BookResponse)
+def check_book_availability(book_id: int):
+    book = next((b for b in books if b["id"] == book_id), None)
+
+    if book is None:
+        raise HTTPException(status_code=404, detail="Book not found")
+    
+    return book
