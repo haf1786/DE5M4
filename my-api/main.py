@@ -61,22 +61,12 @@ def update_book(book_id: int, title: str):
       return {"message": "Book updated", "book": book}
   raise HTTPException(status_code=404, detail="Book not found")
 
-# @app.patch("/books/{book_id}/{title}", response_model=Book)
-# def update_book_title(book_id: int, title: str):
-#     if book_id not in books:
-#         raise HTTPException(status_code=404, detail="Book not found")
-
-#     if title is None:
-#         raise HTTPException(status_code=400, detail="Title field is required for")
-    
-#     books_db[book_id]["title"] = title
-#     return books_db[book_id]
-
 # 5 Remove a book
 @app.delete("/books/delete/{book_id}")
 def delete_book(book_id: int):
-    if book_id not in books:
-        raise HTTPException(status_code=404, detail="Book not found")
-    
-    del books[book_id]
-    return {"available_books": available_books}
+  target_id = book_id -1
+  for book in books:
+    if book["id"] == book_id:
+      del books[target_id]
+      return {"message": "Book Deleted", "book": book}
+  raise HTTPException(status_code=404, detail="Book not found")
