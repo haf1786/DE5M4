@@ -19,3 +19,11 @@
 ## To run the code, open main.py and select Run Python File.
 
 ## To test functionality, use http://127.0.0.1:8000/docs or http://127.0.0.1:8000 and then navigate to each of the functions.
+
+## Steps completed:
+
+## To check the availability of all books.
+## To return only the available books.
+## To check the availability of a specific book.
+## To update the title of a book. (PUT/PATCH)
+## To delete a book (DELETE)
