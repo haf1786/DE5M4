@@ -1,6 +1,5 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import Optional
 
 # Write JSON line entries inside a list with some example books and their availability.
 
@@ -70,3 +69,11 @@ def delete_book(book_id: int):
       del books[target_id]
       return {"message": "Book Deleted", "book": book}
   raise HTTPException(status_code=404, detail="Book not found")
+
+
+
+# def check_availability(book_id: int): 
+# 	for book in books: 
+# 		if book["id"] == book_id: 
+# 			return book["available"] 
+# 	return None
